@@ -1,0 +1,6 @@
+.idea/
+app/static/videos/*
+!app/static/videos/README
+app/static/data/*
+!app/static/data/README
+env
