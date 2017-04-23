@@ -1,4 +1,6 @@
 .idea/
+*.pyc
+app/*.pyc
 app/static/videos/*
 !app/static/videos/README
 app/static/data/*
