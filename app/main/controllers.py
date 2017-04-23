@@ -19,7 +19,7 @@ def upload():
             app.root_path, 'static/videos', filename
         ))
 
-        flash("Video file uploaded saved - " + filename, 'success')
+        flash("Video file uploaded - " + filename, 'success')
 
         title = form.title.data
         desc = form.description.data
