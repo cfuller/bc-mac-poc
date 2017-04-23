@@ -19,7 +19,7 @@ def upload():
             app.root_path, 'static/videos', filename
         ))
 
-        flash("Video file uploaded saved - " + filename)
+        flash("Video file uploaded saved - " + filename, 'success')
 
         title = form.title.data
         desc = form.description.data
@@ -27,7 +27,7 @@ def upload():
 
         token = auth()
 
-        flash('authenticated')
+        flash('Authenticated', 'success')
 
         headers = {'Authorization': 'Bearer ' + token}
 
@@ -36,11 +36,11 @@ def upload():
         json = r.json()
 
         if r.status_code > 399:
-            flash('Error: ' + json['message'], 'error')
+            flash('Error: ' + json['message'], 'danger')
             return render_template('main/upload.html', form=form)
         else:
             vid = json['id']
-            flash('Video ' + vid + ' - record created')
+            flash('Video ' + vid + ' - record created', 'success')
 
             r = requests.get('https://ingest.api.brightcove.com/v1/accounts/' + app.config['VC_ACCOUNT'] + '/videos/' + vid + '/upload-urls/' + title, headers=headers)
             json = r.json()
@@ -55,7 +55,7 @@ def upload():
             r = requests.post('https://ingest.api.brightcove.com/v1/accounts/' + app.config['VC_ACCOUNT'] + '/videos/' + vid + '/ingest-requests',
                               json={"master": {"url": json['api_request_url']}}, headers=headers)
             json = r.json()
-            flash('Job ' + json['id'] + ' started')
+            flash('Ingest job ' + json['id'] + ' started', 'info')
 
 
     return render_template('main/upload.html', form=form)
